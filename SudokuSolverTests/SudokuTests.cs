@@ -1,5 +1,5 @@
-﻿using ConsoleApp1;
-using Shouldly;
+﻿using Shouldly;
+using SudokuSolver;
 
 namespace SudokuSolverTests;
 
