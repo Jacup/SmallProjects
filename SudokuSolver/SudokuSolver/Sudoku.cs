@@ -4,7 +4,6 @@ namespace SudokuSolver;
 
 public class Sudoku(char[][] board)
 {
-    public readonly char[][] originalBoard = board;
     public char[][] board = board;
     
     private readonly char[] possibleValues = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
@@ -41,7 +40,7 @@ public class Sudoku(char[][] board)
             {
                 var column = boxColumnIndex * 3 + j;
 
-                box[i, j] = originalBoard[row][column];
+                box[i, j] = board[row][column];
             }
         }
 
@@ -113,6 +112,21 @@ public class Sudoku(char[][] board)
         var boxCandidates = GetCandidatesForBox(rowIndex, columnIndex);
 
         return rowCandidates.Intersect(columnCandidates).Intersect(boxCandidates);
+    }
+
+    public IEnumerable<(int Row, int Column, char Candidate)> GetAllSingleCandidates()
+    {
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                var candidates = GetCandidatesForSpot(i, j).ToArray();
+                if (candidates.Length == 1)
+                {
+                    yield return (i, j, candidates[0]);
+                }
+            }
+        }
     }
 
     public override string? ToString()
